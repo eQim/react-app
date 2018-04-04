@@ -7,8 +7,15 @@ node_js:
 branches:
   only:
     - master
+
 deploy:
   provider: heroku
-  app: "react-app-eqim"
+  app: 
+	master: react-app-eqim
+	production: react-app-production
   api_key:
     secure: "a7012339-4abc-4818-930f-78a6d69d3b6b"
+
+after_success:
+  - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
